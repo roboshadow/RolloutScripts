@@ -1,6 +1,6 @@
 
 $keyName = "OrganisationId"
-$newValue = "6caca2b0-7df0-4f47-b4f2-fdcb86b7f820"
+$newValue = "{ADD ORG ID HERE}"
 
 # Define the registry path, key name, and new value for OrganisationId
 $registryPathControl = "HKLM:\SOFTWARE\RoboShadowLtd\Rubicon\Control"
