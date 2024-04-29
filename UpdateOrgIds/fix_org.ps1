@@ -23,7 +23,7 @@ if ($orgIdValueControl -eq $newValue -and $orgIdValueAgent -eq $newValue) {
 }
 
 # Service names
-$services = @('RoboShadowControl', 'RoboShadowAgent')
+$services = @('RoboShadowAgent')
 
 # Stop the services
 foreach ($service in $services) {
