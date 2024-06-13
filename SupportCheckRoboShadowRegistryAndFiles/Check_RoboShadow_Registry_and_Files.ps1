@@ -38,8 +38,11 @@ $machineName = $env:COMPUTERNAME
 $publicKeyPath = "C:\ProgramData\RoboShadow\Rubicon\Control\Data\PublicKey"
 $fileExists = Test-Path -Path $publicKeyPath
 
-# Output results to a file with machine name in the filename
-$outputFile = "$PSScriptRoot\${machineName}_output.txt"
+# Get user's Documents folder
+$documentsFolder = [environment]::GetFolderPath("MyDocuments")
+
+# Output results to a file in the user's Documents folder
+$outputFile = "$documentsFolder\${machineName}_output.txt"
 
 "Machine Name: $machineName" | Out-File -FilePath $outputFile -Append
 "`nAgent Registry Values:" | Out-File -FilePath $outputFile -Append
