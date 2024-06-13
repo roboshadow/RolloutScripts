@@ -44,6 +44,9 @@ $documentsFolder = [environment]::GetFolderPath("MyDocuments")
 # Output results to a file in the user's Documents folder
 $outputFile = "$documentsFolder\${machineName}_output.txt"
 
+# Ensure the file is created before appending
+New-Item -Path $outputFile -ItemType File -Force | Out-Null
+
 "Machine Name: $machineName" | Out-File -FilePath $outputFile -Append
 "`nAgent Registry Values:" | Out-File -FilePath $outputFile -Append
 $agentResults.GetEnumerator() | ForEach-Object { "$($_.Key): $($_.Value)" | Out-File -FilePath $outputFile -Append }
