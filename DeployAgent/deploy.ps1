@@ -3,7 +3,7 @@
 # 
 # How to use:
 # 1. Replace YOUR_ORGANISATION_ID with the organisationID from the correct organisation in the Portal. https://portal.roboshadow.com/account/organisations
-#	 Note: changing this after install is not trivial.
+# Note: changing this after install is not trivial.
 # 2. Set $haveSetOrgId to $True
 # ********************************************
 
