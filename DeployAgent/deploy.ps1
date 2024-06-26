@@ -1,9 +1,10 @@
 # ********************************************
-# If you are deploying via intune I would recommend using our intune integration feature.
+# If you are deploying via InTune we recommend using our InTune integration feature. https://portal.roboshadow.com/devices
 # 
 # How to use:
-# Replace YOUR_ORGANISATION_ID with the organisationID from the correct organisation in the portal. Note changing this after install is not trvial.
-# Set $haveSetOrgId to $True
+# 1. Replace YOUR_ORGANISATION_ID with the organisationID from the correct organisation in the Portal. https://portal.roboshadow.com/account/organisations
+#	 Note: changing this after install is not trivial.
+# 2. Set $haveSetOrgId to $True
 # ********************************************
 
 $organisationId = "YOUR_ORGANISATION_ID"
