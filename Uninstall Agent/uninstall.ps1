@@ -8,7 +8,7 @@ if ($uninstallKey) {
     Write-Host $msiexecPath
     $msiexecPath = Join-Path $env:SystemRoot "System32\msiexec.exe"
     $arguments = ($uninstallKey -split 'MsiExec.exe', 2)[1].Trim()
-    $arguments = "$arguments /q"
+    $arguments = "$arguments /q /norestart"
     $process = Start-Process -FilePath $msiexecPath -ArgumentList $arguments -Wait -PassThru 
     Write-Host "Exit Code: $($process.ExitCode)"
 } else { Write-Host "Not installed"}
