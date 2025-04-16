@@ -10,7 +10,7 @@
 $organisationId = "YOUR_ORGANISATION_ID"
 $haveSetOrgId = $False
 
-$version = (Get-ItemProperty -Path "HKLM:\SOFTWARE\RoboShadowLtd\Rubicon\Agent" -Name "Version" -ErrorAction SilentlyContinue).$valueName
+$version = (Get-ItemProperty -Path "HKLM:\SOFTWARE\RoboShadowLtd\Rubicon\Agent" -Name "Version" -ErrorAction SilentlyContinue).Version
 
 if ($haveSetOrgId -and (-not $version -or [int]($version -split '\.')[0] -lt 4)) {
   Start-Process "C:\Windows\System32\msiexec.exe" -ArgumentList "/i https://cdn.roboshadow.com/GetAgent/RoboShadowAgent-x64.msi /qn /norestart ORGANISATION_ID=$organisationId" -Wait
