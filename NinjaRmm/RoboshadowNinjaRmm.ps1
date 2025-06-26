@@ -75,7 +75,7 @@ if (-not $orgId) {
 }
 
 # Step 3: Install the RoboShadow Agent
-$agentUrl = "https://cdn.roboshadow.com/GetAgent/RoboShadowAgent-x64-RC-2542540103.msi"
+$agentUrl = "https://cdn.roboshadow.com/GetAgent/RoboShadowAgent-x64.msi"
 $msiArgs = "/i `"$agentUrl`" /qn /norestart ORGANISATION_ID=$orgId"
 
 try {
