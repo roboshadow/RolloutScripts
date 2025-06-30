@@ -73,7 +73,7 @@ if (Test-RegistryKey $agentVersionPath) {
     if ($agentVersion) {
         Write-Host "   ✓ Agent Version key EXISTS: $agentVersion" -ForegroundColor Green
     } else {
-        Write-Host "   ⚠ Agent path exists but Version value missing" -ForegroundColor Orange
+        Write-Host "   ⚠ Agent path exists but Version value missing" -ForegroundColor DarkYellow
     }
 } else {
     Write-Host "   ✗ Agent Version registry key NOT FOUND" -ForegroundColor Red
@@ -88,7 +88,7 @@ if (Test-RegistryKey $controlVersionPath) {
     if ($controlVersion) {
         Write-Host "   ✓ Control Version key EXISTS: $controlVersion" -ForegroundColor Green
     } else {
-        Write-Host "   ⚠ Control path exists but Version value missing" -ForegroundColor Orange
+        Write-Host "   ⚠ Control path exists but Version value missing" -ForegroundColor DarkYellow
     }
 } else {
     Write-Host "   ✗ Control Version registry key NOT FOUND" -ForegroundColor Red
