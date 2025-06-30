@@ -1,7 +1,13 @@
 param(
-    [Parameter(Mandatory=$true)]
+    [Parameter(Mandatory=$false)]  # Change to false
     [string]$OrganisationId
 )
+
+# Prompt for OrganisationId if not provided
+if (-not $OrganisationId) {
+    $OrganisationId = Read-Host "Please enter your OrganisationId"
+}
+
 
 function Get-RegistryValue {
     param(
