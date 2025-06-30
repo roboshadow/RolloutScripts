@@ -3,7 +3,6 @@ param(
     [string]$OrganisationId
 )
 
-# Function to check if a registry key exists and get its value
 function Get-RegistryValue {
     param(
         [string]$Path,
@@ -18,7 +17,6 @@ function Get-RegistryValue {
     }
 }
 
-# Function to check if a registry key exists
 function Test-RegistryKey {
     param([string]$Path)
     try {
@@ -30,16 +28,16 @@ function Test-RegistryKey {
     }
 }
 
-# Clear screen and start diagnostic
 Clear-Host
-Write-Host "=" * 70 -ForegroundColor Cyan
+$separator = "=" * 70
+Write-Host $separator -ForegroundColor Cyan
 Write-Host "    ROBOSHADOW AGENT DIAGNOSTIC REPORT" -ForegroundColor White
-Write-Host "=" * 70 -ForegroundColor Cyan
+Write-Host $separator -ForegroundColor Cyan
 Write-Host "Date/Time: $(Get-Date -Format 'yyyy-MM-dd HH:mm:ss')" -ForegroundColor Gray
 Write-Host "Organisation ID: $OrganisationId" -ForegroundColor Gray
 Write-Host ""
 
-# Check 1: RoboShadowAgent Service Exists
+# Check 1: Service Exists
 Write-Host "1. SERVICE EXISTENCE CHECK" -ForegroundColor Yellow
 $service = Get-Service -Name "RoboShadowAgent" -ErrorAction SilentlyContinue
 if ($service) {
@@ -49,7 +47,7 @@ if ($service) {
 }
 Write-Host ""
 
-# Check 2: RoboShadowAgent Service Running
+# Check 2: Service Running
 Write-Host "2. SERVICE STATUS CHECK" -ForegroundColor Yellow
 if ($service) {
     if ($service.Status -eq "Running") {
@@ -62,10 +60,9 @@ if ($service) {
 }
 Write-Host ""
 
-# Registry base path
 $basePath = "HKLM:\SOFTWARE\RoboShadowLtd\Rubicon"
 
-# Check 3: Agent Version Registry Key
+# Check 3: Agent Version
 Write-Host "3. AGENT VERSION REGISTRY CHECK" -ForegroundColor Yellow
 $agentVersionPath = "$basePath\Agent"
 if (Test-RegistryKey $agentVersionPath) {
@@ -80,7 +77,7 @@ if (Test-RegistryKey $agentVersionPath) {
 }
 Write-Host ""
 
-# Check 4: Control Version Registry Key
+# Check 4: Control Version
 Write-Host "4. CONTROL VERSION REGISTRY CHECK" -ForegroundColor Yellow
 $controlVersionPath = "$basePath\Control"
 if (Test-RegistryKey $controlVersionPath) {
@@ -95,7 +92,7 @@ if (Test-RegistryKey $controlVersionPath) {
 }
 Write-Host ""
 
-# Check 5: Control Organisation ID Match
+# Check 5: Control Organisation ID
 Write-Host "5. CONTROL ORGANISATION ID CHECK" -ForegroundColor Yellow
 if (Test-RegistryKey $controlVersionPath) {
     $controlOrgId = Get-RegistryValue $controlVersionPath "OrganisationId"
@@ -115,7 +112,7 @@ if (Test-RegistryKey $controlVersionPath) {
 }
 Write-Host ""
 
-# Check 6: Agent Organisation ID Match
+# Check 6: Agent Organisation ID
 Write-Host "6. AGENT ORGANISATION ID CHECK" -ForegroundColor Yellow
 if (Test-RegistryKey $agentVersionPath) {
     $agentOrgId = Get-RegistryValue $agentVersionPath "OrganisationId"
@@ -135,7 +132,7 @@ if (Test-RegistryKey $agentVersionPath) {
 }
 Write-Host ""
 
-# Check 7: Control Device ID
+# Check 7: Device ID
 Write-Host "7. CONTROL DEVICE ID CHECK" -ForegroundColor Yellow
 if (Test-RegistryKey $controlVersionPath) {
     $deviceId = Get-RegistryValue $controlVersionPath "DeviceId"
@@ -162,11 +159,10 @@ if (Test-Path $publicKeyPath) {
     Write-Host "     Expected location: $publicKeyPath" -ForegroundColor Red
 }
 
-# Summary
 Write-Host ""
-Write-Host "=" * 70 -ForegroundColor Cyan
+Write-Host $separator -ForegroundColor Cyan
 Write-Host "    DIAGNOSTIC COMPLETE" -ForegroundColor White
-Write-Host "=" * 70 -ForegroundColor Cyan
+Write-Host $separator -ForegroundColor Cyan
 Write-Host "Please screenshot this entire output and send to support." -ForegroundColor White
 Write-Host "Computer Name: $env:COMPUTERNAME" -ForegroundColor Gray
 Write-Host "User: $env:USERNAME" -ForegroundColor Gray
