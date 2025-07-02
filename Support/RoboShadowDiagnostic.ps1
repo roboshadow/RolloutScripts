@@ -104,11 +104,11 @@ if (Test-RegistryKey $controlVersionPath) {
     $controlOrgId = Get-RegistryValue $controlVersionPath "OrganisationId"
     if ($controlOrgId) {
         if ($controlOrgId -eq $OrganisationId) {
-            Write-Host "   ✓ Control OrganisationId MATCHES: $controlOrgId" -ForegroundColor Green
+            Write-Host "   ✓ Control OrganisationId MATCHES: $controlOrgId|" -ForegroundColor Green
         } else {
             Write-Host "   ✗ Control OrganisationId MISMATCH" -ForegroundColor Red
-            Write-Host "     Expected: $OrganisationId" -ForegroundColor Red
-            Write-Host "     Found: $controlOrgId" -ForegroundColor Red
+            Write-Host "     Expected: $OrganisationId|" -ForegroundColor Red
+            Write-Host "     Found: $controlOrgId|" -ForegroundColor Red
         }
     } else {
         Write-Host "   ✗ Control OrganisationId value NOT FOUND" -ForegroundColor Red
@@ -124,11 +124,11 @@ if (Test-RegistryKey $agentVersionPath) {
     $agentOrgId = Get-RegistryValue $agentVersionPath "OrganisationId"
     if ($agentOrgId) {
         if ($agentOrgId -eq $OrganisationId) {
-            Write-Host "   ✓ Agent OrganisationId MATCHES: $agentOrgId" -ForegroundColor Green
+            Write-Host "   ✓ Agent OrganisationId MATCHES: $agentOrgId|" -ForegroundColor Green
         } else {
             Write-Host "   ✗ Agent OrganisationId MISMATCH" -ForegroundColor Red
-            Write-Host "     Expected: $OrganisationId" -ForegroundColor Red
-            Write-Host "     Found: $agentOrgId" -ForegroundColor Red
+            Write-Host "     Expected: $OrganisationId|" -ForegroundColor Red
+            Write-Host "     Found: $agentOrgId|" -ForegroundColor Red
         }
     } else {
         Write-Host "   ✗ Agent OrganisationId value NOT FOUND" -ForegroundColor Red
@@ -172,4 +172,10 @@ Write-Host $separator -ForegroundColor Cyan
 Write-Host "Please screenshot this entire output and send to support." -ForegroundColor White
 Write-Host "Computer Name: $env:COMPUTERNAME" -ForegroundColor Gray
 Write-Host "User: $env:USERNAME" -ForegroundColor Gray
+
+# Get OS Information
+$osInfo = Get-WmiObject -Class Win32_OperatingSystem
+Write-Host "Operating System: $($osInfo.Caption)" -ForegroundColor Gray
+Write-Host "OS Version: $($osInfo.Version)" -ForegroundColor Gray
+Write-Host "OS Build: $($osInfo.BuildNumber)" -ForegroundColor Gray
 Write-Host ""
