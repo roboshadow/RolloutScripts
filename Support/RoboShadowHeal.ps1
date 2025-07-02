@@ -1,7 +1,19 @@
 param(
-    [Parameter(Mandatory=$true)]
+    [Parameter(Mandatory=$false)]
     [string]$OrganisationId
 )
+
+# Prompt for OrganisationId if not provided
+if ([string]::IsNullOrWhiteSpace($OrganisationId)) {
+    $OrganisationId = Read-Host "Please enter your OrganisationId"
+    
+    # Validate the input is not empty after prompting
+    if ([string]::IsNullOrWhiteSpace($OrganisationId)) {
+        Write-Host "ERROR: OrganisationId cannot be null, empty, or whitespace" -ForegroundColor Red
+        Write-Host "Usage: .\RoboShadowHeal.ps1 -OrganisationId 'your-org-id-here'" -ForegroundColor Yellow
+        exit 1
+    }
+}
 
 function Write-LogMessage {
     param(
