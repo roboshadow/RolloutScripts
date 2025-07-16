@@ -1,7 +1,5 @@
-# Define the registry path, key name, and new value for OrganisationId
+# Define the registry path for Control
 $registryPathControl = "HKLM:\SOFTWARE\RoboShadowLtd\Rubicon\Control"
-$registryPathAgent = "HKLM:\SOFTWARE\RoboShadowLtd\Rubicon\Agent"
-$registryPathUpdater = "HKLM:\SOFTWARE\RoboShadowLtd\Rubicon\Updater"
 
 # Service names
 $services = @('RoboShadowAgent')
@@ -19,9 +17,6 @@ foreach ($service in $services) {
 # Check if the registry key exists
 if (Test-Path $registryPathControl) {
 
-    # Set the registry value for OrganisationId
-    Set-ItemProperty -Path $registryPathControl -Name $keyName -Value $newValue
-    Write-Output "OrganisationId registry value updated successfully."
     
     # Delete the DeviceId registry value
     try {
