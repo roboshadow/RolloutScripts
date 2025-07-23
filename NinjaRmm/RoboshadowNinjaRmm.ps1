@@ -1,7 +1,6 @@
 param (
     [Parameter(Mandatory = $true)]
-    [string]$apiKey,
-
+    [string]$apiKey = $env:ROBOSHADOW_RMM_KEY,
     [string]$organisationName = $env:NINJA_ORGANIZATION_NAME
 )
 function Write-Log {
