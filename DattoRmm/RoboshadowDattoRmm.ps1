@@ -11,6 +11,10 @@ try { [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::
 
 $serviceName = "RoboShadowAgent"
 
+if ([string]::IsNullOrWhiteSpace($apiKey)) {
+    Write-Error "API key missing. Ensure ROBOSHADOW_RMM_KEY is set as a Datto Component Input Variable / global variable."
+    exit 1
+}
 try {
     $service = Get-Service -Name $serviceName -ErrorAction Stop
     if ($service.Status -eq 'Running') {
