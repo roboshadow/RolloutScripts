@@ -13,9 +13,9 @@ if ($uninstallKey) {
     Write-Host "Exit Code: $($process.ExitCode)"
 } else { Write-Host "Not installed"}
 
-$registryPathControl = "HKLM:\SOFTWARE\RoboShadowLtd\Control"
-if (Test-Path $registryPathControl) {
-    Remove-Item -Path $registryPathControl -Recurse -Force
+$registryPathRoboShadow = "HKLM:\SOFTWARE\RoboShadowLtd"
+if (Test-Path $registryPathRoboShadow) {
+    Remove-Item -Path $registryPathRoboShadow -Recurse -Force
 }
 
 $programData = "C:\ProgramData\RoboShadow\Rubicon\Control"
