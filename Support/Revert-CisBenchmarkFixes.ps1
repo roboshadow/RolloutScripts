@@ -278,31 +278,38 @@ $deleteSet = New-Object 'System.Collections.Generic.HashSet[string]' ([System.St
 foreach ($pair in $policyValues) { [void]$deleteSet.Add($pair) }
 
 Note ''
-Note 'Step 1/6: Getting LGPO.exe from the RoboShadow CDN' 'Cyan'
+Note 'Step 1/6: Locating LGPO.exe' 'Cyan'
 $polPath = Join-Path $env:WINDIR 'System32\GroupPolicy\Machine\Registry.pol'
 $lgpo = $null
 if (Test-Path $polPath) {
-    $lgpo = Join-Path $backupDir 'LGPO.exe'
-    $lgpoUrl = 'https://cdn.roboshadow.com/cloudscanner/LGPO.exe'
-    try {
-        $proxy = [System.Net.WebRequest]::GetSystemWebProxy()
-        $proxy.Credentials = [System.Net.CredentialCache]::DefaultCredentials
-        $handler = New-Object System.Net.Http.HttpClientHandler
-        $handler.Proxy = $proxy
-        $handler.UseProxy = $true
-        $client = New-Object System.Net.Http.HttpClient($handler)
-        [System.IO.File]::WriteAllBytes($lgpo, $client.GetByteArrayAsync($lgpoUrl).Result)
+    $healLgpo = 'C:\ProgramData\RoboShadow\Rubicon\Control\Download\LGPO.exe'
+    if ((Test-Path $healLgpo) -and (Get-Item $healLgpo).Length -gt 100000) {
+        $lgpo = $healLgpo
+        Note 'Using LGPO.exe already downloaded by the RoboShadow fix jobs' 'Green'
     }
-    catch {
-        Invoke-WebRequest -Uri $lgpoUrl -OutFile $lgpo -UseBasicParsing
+    else {
+        $lgpo = Join-Path $backupDir 'LGPO.exe'
+        $lgpoUrl = 'https://cdn.roboshadow.com/cloudscanner/LGPO.exe'
+        try {
+            $proxy = [System.Net.WebRequest]::GetSystemWebProxy()
+            $proxy.Credentials = [System.Net.CredentialCache]::DefaultCredentials
+            $handler = New-Object System.Net.Http.HttpClientHandler
+            $handler.Proxy = $proxy
+            $handler.UseProxy = $true
+            $client = New-Object System.Net.Http.HttpClient($handler)
+            [System.IO.File]::WriteAllBytes($lgpo, $client.GetByteArrayAsync($lgpoUrl).Result)
+        }
+        catch {
+            Invoke-WebRequest -Uri $lgpoUrl -OutFile $lgpo -UseBasicParsing
+        }
+        if (!(Test-Path $lgpo) -or (Get-Item $lgpo).Length -lt 100000) {
+            throw 'Could not download LGPO.exe - check internet access and run the script again. Nothing has been changed.'
+        }
+        Note 'LGPO.exe downloaded from the RoboShadow CDN' 'Green'
     }
-    if (!(Test-Path $lgpo) -or (Get-Item $lgpo).Length -lt 100000) {
-        throw 'Could not download LGPO.exe - check internet access and run the script again. Nothing has been changed.'
-    }
-    Note 'LGPO.exe downloaded' 'Green'
 }
 else {
-    Note 'No Machine Registry.pol present - skipping LGPO download' 'DarkGray'
+    Note 'No Machine Registry.pol present - LGPO.exe not needed' 'DarkGray'
 }
 
 Note ''
